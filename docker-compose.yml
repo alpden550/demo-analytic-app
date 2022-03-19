@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  app:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - url_shortener/.env.dev
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres
+    env_file:
+      - url_shortener/.env.dev
